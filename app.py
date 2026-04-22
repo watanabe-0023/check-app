@@ -10,8 +10,8 @@ from core.schema import RuleResult
 
 st.set_page_config(page_title="収益管理表 月次チェック", layout="wide", page_icon="📊")
 
-# パスワード認証
-PASSWORD = "978init"
+# パスワード認証（Streamlit Secretsから読み込む）
+PASSWORD = st.secrets.get("PASSWORD", "978init")
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
 
