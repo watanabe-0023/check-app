@@ -10,15 +10,163 @@ from core.schema import RuleResult
 
 st.set_page_config(page_title="収益管理表 月次チェック", layout="wide", page_icon="📊")
 
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600;700&display=swap');
+
+html, body, [class*="css"] {
+    font-family: 'Noto Sans JP', 'Inter', sans-serif;
+}
+
+/* 背景 */
+.stApp {
+    background-color: #F4F6F9;
+}
+
+/* ヘッダーエリア */
+.main-header {
+    background: linear-gradient(135deg, #1B2A4A 0%, #2E4172 100%);
+    padding: 2rem 2.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 20px rgba(27, 42, 74, 0.2);
+}
+.main-header h1 {
+    color: #FFFFFF;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+.main-header p {
+    color: #A8BFDF;
+    font-size: 0.85rem;
+    margin: 0.3rem 0 0 0;
+    letter-spacing: 0.05em;
+}
+
+/* ログイン画面 */
+.login-container {
+    max-width: 420px;
+    margin: 5rem auto;
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 8px 40px rgba(27, 42, 74, 0.12);
+    border-top: 4px solid #1B2A4A;
+}
+.login-title {
+    color: #1B2A4A;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.3rem;
+}
+.login-sub {
+    color: #8A9BB5;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+}
+
+/* タブ */
+.stTabs [data-baseweb="tab-list"] {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    gap: 4px;
+}
+.stTabs [data-baseweb="tab"] {
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #5A6A85;
+    padding: 0.5rem 1.5rem;
+}
+.stTabs [aria-selected="true"] {
+    background: #1B2A4A !important;
+    color: #FFFFFF !important;
+}
+
+/* カード */
+.metric-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-left: 4px solid #1B2A4A;
+    margin-bottom: 1rem;
+}
+
+/* ボタン */
+.stButton > button {
+    background: linear-gradient(135deg, #1B2A4A, #2E4172);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 0.6rem 2rem;
+    letter-spacing: 0.03em;
+    transition: all 0.2s;
+    box-shadow: 0 2px 8px rgba(27,42,74,0.2);
+}
+.stButton > button:hover {
+    box-shadow: 0 4px 16px rgba(27,42,74,0.35);
+    transform: translateY(-1px);
+}
+
+/* ファイルアップローダー */
+.stFileUploader {
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+
+/* セクションヘッダー */
+h2, h3 {
+    color: #1B2A4A;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+/* 区切り線 */
+hr {
+    border-color: #E2E8F0;
+}
+
+/* メトリクス */
+[data-testid="metric-container"] {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* セレクトボックス */
+.stSelectbox > div > div {
+    border-radius: 8px;
+    border-color: #D1DBE8;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # パスワード認証（Streamlit Secretsから読み込む）
 PASSWORD = st.secrets.get("PASSWORD", "978init")
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
 
 if not st.session_state["authenticated"]:
-    st.title("🔒 収益管理表 月次チェックアプリ")
-    pw = st.text_input("パスワードを入力してください", type="password")
-    if st.button("ログイン"):
+    st.markdown("""
+    <div class="login-container">
+        <div class="login-title">収益管理表 月次チェック</div>
+        <div class="login-sub">init株式会社 | 会計事務所向け自動突合ツール</div>
+    </div>
+    """, unsafe_allow_html=True)
+    pw = st.text_input("パスワード", type="password", placeholder="パスワードを入力してください")
+    if st.button("ログイン", use_container_width=True):
         if pw == PASSWORD:
             st.session_state["authenticated"] = True
             st.rerun()
@@ -26,8 +174,12 @@ if not st.session_state["authenticated"]:
             st.error("パスワードが違います")
     st.stop()
 
-st.title("📊 収益管理表 月次チェックアプリ")
-st.caption("init株式会社 | 会計事務所向け 自動突合ツール")
+st.markdown("""
+<div class="main-header">
+    <h1>収益管理表 月次チェック</h1>
+    <p>init株式会社 ｜ 会計事務所向け 自動突合ツール</p>
+</div>
+""", unsafe_allow_html=True)
 
 tab1, tab2, tab3 = st.tabs(["① アップロード", "② 突合結果", "③ レポート出力"])
 
