@@ -1,0 +1,43 @@
+# 差異許容値設定
+default_abs_tolerance: 1       # 円（絶対値）
+default_rate_tolerance: 0.01   # 1%
+
+rules:
+  # 売上系
+  S01: {abs: 1}
+  S02: {abs: 1}
+  S03: {abs: 1}
+  S04: {abs: 1}
+  S05: {rate: 0.01}
+  S06: {abs: 1}
+
+  # 費用系
+  E01: {abs: 1}
+  E02: {abs: 1}
+  E03: {abs: 1}
+  E04: {abs: 1}
+  E05: {abs: 1}
+  E06: {rate: 0.02}
+
+  # 人件費系（P01は差異が出るのが正常）
+  P01: {abs: null, rate: null, status: info}
+  P02: {abs: 1}
+  P03: {abs: 1}
+  P04: {abs: 1}
+  P05: {abs: 0.1}  # 配賦率 ±0.1pt
+
+  # 集計系
+  T01: {abs: 1}
+  T02: {abs: 1}
+  T03: {abs: 1}
+  T04: {abs: 1}
+
+  # BS突合系
+  B01: {abs: 1}
+  B02: {abs: 1}
+  B03: {abs: 1}
+  B04: {abs: 1}
+
+# 構造的差異（常にinfo表示）
+structural_info_rules:
+  - P01  # 役員報酬: 振込ベース vs 発生ベース

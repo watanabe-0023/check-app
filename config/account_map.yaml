@@ -1,0 +1,85 @@
+# freee勘定科目 → 管理表カテゴリ マッピング
+# category: 管理表上のカテゴリ名
+# split_by: 補助科目で分割する場合に指定
+
+# 収益
+売上高:
+  category: 事業収益
+  split_by: 補助科目
+
+# 費用 - 原価
+外注費:
+  category: 原価
+仕入高:
+  category: 原価
+業務委託費:
+  category: 原価
+
+# 費用 - 販促費
+広告宣伝費:
+  category: 販促費
+販売促進費:
+  category: 販促費
+交際費:
+  category: 販促費
+会議費:
+  category: 販促費
+
+# 費用 - 採用教育費
+採用費:
+  category: 採用教育費
+教育研修費:
+  category: 採用教育費
+
+# 費用 - 福利厚生費
+福利厚生費:
+  category: 福利厚生費
+
+# 費用 - 管理費
+旅費交通費:
+  category: 管理費
+通信費:
+  category: 管理費
+消耗品費:
+  category: 管理費
+地代家賃:
+  category: 管理費
+水道光熱費:
+  category: 管理費
+支払手数料:
+  category: 管理費
+雑費:
+  category: 管理費
+新聞図書費:
+  category: 管理費
+リース料:
+  category: 管理費
+租税公課:
+  category: 管理費
+減価償却費:
+  category: 管理費
+
+# 人件費
+役員報酬:
+  category: 役員報酬給与
+  basis_note: 発生ベース
+給料手当:
+  category: 役員報酬給与
+  basis_note: 発生ベース
+法定福利費:
+  category: 社会保険料
+  split:
+    - 会社負担
+    - 本人負担
+
+# 雑収入
+雑収入:
+  category: 雑収入
+
+# 預り金（BS科目）
+預り金:
+  category: 預り金
+  sub_categories:
+    - 住民税
+    - 源泉所得税
+    - 社会保険料
